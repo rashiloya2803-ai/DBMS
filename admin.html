@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Spectrum 2025 🌈</title>
+    <link rel="stylesheet" href="navbar.css"> <!-- ADDED THIS LINE -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        if (!localStorage.getItem('isLoggedIn')) {
+            window.location.href = 'index.html';
+        }
+    </script>
+    <style>
+        /* ADMIN DASHBOARD CSS - KEEP THIS */
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500&family=Poppins:wght@300;400;500&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f8f7ff 0%, #f0f7ff 50%, #f7f2ff 100%);
+            color: #6b6b8a;
+            line-height: 1.6;
+            overflow-x: hidden;
+            padding-top: 80px; /* KEEP THIS */
+        }
+        
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .admin-header {
+            text-align: center;
+            padding: 2rem 0;
+            animation: fadeUp 1.5s ease-out;
+        }
+        
+        .admin-title {
+            font-size: 3rem;
+            font-weight: 300;
+            background: linear-gradient(135deg, #ff9ebb 0%, #a3d9ff 25%, #b5e8b5 50%, #ffd6a5 75%, #d9b3ff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+        
+        .admin-subtitle {
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: #9a9ab8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .dashboard-card {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(200, 200, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeUp 1.8s ease-out;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(200, 200, 255, 0.3);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .users .card-icon {
+            background: linear-gradient(135deg, #ff9ebb, #ffb6c1);
+        }
+        
+        .events .card-icon {
+            background: linear-gradient(135deg, #a3d9ff, #b8e1ff);
+        }
+        
+        .revenue .card-icon {
+            background: linear-gradient(135deg, #b5e8b5, #c5ecc5);
+        }
+        
+        .analytics .card-icon {
+            background: linear-gradient(135deg, #ffd6a5, #ffe0b8);
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            color: #8a7fca;
+            margin-bottom: 0.5rem;
+        }
+        
+        .card-value {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .users .card-value {
+            color: #ff9ebb;
+        }
+        
+        .events .card-value {
+            color: #a3d9ff;
+        }
+        
+        .revenue .card-value {
+            color: #b5e8b5;
+        }
+        
+        .analytics .card-value {
+            color: #ffd6a5;
+        }
+        
+        .card-change {
+            font-size: 0.9rem;
+            color: #9a9ab8;
+        }
+        
+        .positive {
+            color: #b5e8b5;
+        }
+        
+        .negative {
+            color: #ff9ebb;
+        }
+        
+        .admin-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+        
+        .action-btn {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            text-decoration: none;
+            color: #6b6b8a;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 20px rgba(200, 200, 255, 0.2);
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(200, 200, 255, 0.3);
+            color: white;
+        }
+        
+        .action-btn.manage-users:hover {
+            background: linear-gradient(135deg, #ff9ebb, #ffb6c1);
+        }
+        
+        .action-btn.manage-events:hover {
+            background: linear-gradient(135deg, #a3d9ff, #b8e1ff);
+        }
+        
+        .action-btn.view-reports:hover {
+            background: linear-gradient(135deg, #b5e8b5, #c5ecc5);
+        }
+        
+        .action-btn.settings:hover {
+            background: linear-gradient(135deg, #ffd6a5, #ffe0b8);
+        }
+        
+        .action-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .recent-activity {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(200, 200, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            margin: 3rem 0;
+            animation: fadeUp 2s ease-out;
+        }
+        
+        .activity-title {
+            font-size: 1.8rem;
+            color: #8a7fca;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .activity-list {
+            list-style: none;
+        }
+        
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(200, 200, 255, 0.3);
+        }
+        
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+        
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+        }
+        
+        .activity-user {
+            background: linear-gradient(135deg, #ff9ebb, #ffb6c1);
+        }
+        
+        .activity-event {
+            background: linear-gradient(135deg, #a3d9ff, #b8e1ff);
+        }
+        
+        .activity-payment {
+            background: linear-gradient(135deg, #b5e8b5, #c5ecc5);
+        }
+        
+        .activity-content {
+            flex: 1;
+        }
+        
+        .activity-time {
+            font-size: 0.8rem;
+            color: #9a9ab8;
+        }
+        
+        /* Floating elements */
+        .floating-element {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(20px);
+            z-index: -1;
+            animation: float 15s infinite ease-in-out;
+            opacity: 0.7;
+        }
+        
+        .floating-element:nth-child(1) {
+            top: 10%;
+            left: 5%;
+            width: 120px;
+            height: 120px;
+            background: #ffb6c1;
+            animation-delay: 0s;
+        }
+        
+        .floating-element:nth-child(2) {
+            top: 60%;
+            right: 10%;
+            width: 80px;
+            height: 80px;
+            background: #a3d9ff;
+            animation-delay: 5s;
+        }
+        
+        .floating-element:nth-child(3) {
+            bottom: 20%;
+            left: 15%;
+            width: 150px;
+            height: 150px;
+            background: #b5e8b5;
+            animation-delay: 10s;
+        }
+        
+        .floating-element:nth-child(4) {
+            top: 30%;
+            right: 20%;
+            width: 100px;
+            height: 100px;
+            background: #ffd6a5;
+            animation-delay: 7s;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            33% {
+                transform: translateY(-20px) rotate(120deg);
+            }
+            66% {
+                transform: translateY(10px) rotate(240deg);
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .admin-title {
+                font-size: 2.5rem;
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .admin-actions {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR HTML - KEEP THIS -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="home.html" class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-palette"></i>
+                </div>
+                <span class="logo-text">Spectrum 2025</span>
+            </a>
+            
+            <button class="mobile-toggle" id="mobileToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item">
+                    <a href="home.html" class="nav-link home">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="events.html" class="nav-link events">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Events</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link login">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Login</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="about.html" class="nav-link about">
+                        <i class="fas fa-info-circle"></i>
+                        <span>About</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="contact.html" class="nav-link contact">
+                        <i class="fas fa-envelope"></i>
+                        <span>Contact</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="dashboard.html" class="nav-link dashboard">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ADMIN DASHBOARD CONTENT -->
+    <!-- Floating background elements -->
+    <div class="floating-element"></div>
+    <div class="floating-element"></div>
+    <div class="floating-element"></div>
+    <div class="floating-element"></div>
+    
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1 class="admin-title">Admin Dashboard 🌈</h1>
+            <p class="admin-subtitle">Manage Spectrum 2025 events, users, and analytics</p>
+        </div>
+        
+        <div class="dashboard-grid">
+            <div class="dashboard-card users">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div>
+                        <h3 class="card-title">Total Users</h3>
+                        <div class="card-value">2,847</div>
+                        <div class="card-change positive">+12% this week</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-card events">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div>
+                        <h3 class="card-title">Active Events</h3>
+                        <div class="card-value">24</div>
+                        <div class="card-change positive">+3 new events</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-card revenue">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div>
+                        <h3 class="card-title">Revenue</h3>
+                        <div class="card-value">$48,250</div>
+                        <div class="card-change positive">+8% from last month</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-card analytics">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div>
+                        <h3 class="card-title">Engagement</h3>
+                        <div class="card-value">78%</div>
+                        <div class="card-change negative">-2% this week</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="admin-actions">
+            <a href="#" class="action-btn manage-users">
+                <div class="action-icon">
+                    <i class="fas fa-user-cog"></i>
+                </div>
+                <h3>Manage Users</h3>
+                <p>View and manage user accounts</p>
+            </a>
+            
+            <a href="#" class="action-btn manage-events">
+                <div class="action-icon">
+                    <i class="fas fa-calendar-plus"></i>
+                </div>
+                <h3>Manage Events</h3>
+                <p>Create and edit events</p>
+            </a>
+            
+            <a href="#" class="action-btn view-reports">
+                <div class="action-icon">
+                    <i class="fas fa-chart-bar"></i>
+                </div>
+                <h3>View Reports</h3>
+                <p>Analytics and insights</p>
+            </a>
+            
+            <a href="#" class="action-btn settings">
+                <div class="action-icon">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <h3>Settings</h3>
+                <p>System configuration</p>
+            </a>
+        </div>
+        
+        <div class="recent-activity">
+            <h2 class="activity-title">Recent Activity</h2>
+            <ul class="activity-list">
+                <li class="activity-item">
+                    <div class="activity-icon activity-user">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <div class="activity-content">
+                        <p><strong>Sarah Johnson</strong> registered for the festival</p>
+                        <span class="activity-time">2 hours ago</span>
+                    </div>
+                </li>
+                <li class="activity-item">
+                    <div class="activity-icon activity-event">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <div class="activity-content">
+                        <p>New event <strong>Sunset Beats</strong> was created</p>
+                        <span class="activity-time">5 hours ago</span>
+                    </div>
+                </li>
+                <li class="activity-item">
+                    <div class="activity-icon activity-payment">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <div class="activity-content">
+                        <p>Payment received from <strong>Mike Chen</strong></p>
+                        <span class="activity-time">Yesterday</span>
+                    </div>
+                </li>
+                <li class="activity-item">
+                    <div class="activity-icon activity-user">
+                        <i class="fas fa-ticket-alt"></i>
+                    </div>
+                    <div class="activity-content">
+                        <p><strong>45 tickets</strong> sold for Art Workshop</p>
+                        <span class="activity-time">2 days ago</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ADD THESE LINES AT THE END -->
+    <script src="navbar.js"></script>
+    <script>
+        // Add subtle scroll animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationPlayState = 'running';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe elements with animations
+            const animatedElements = document.querySelectorAll('.dashboard-card, .recent-activity, .action-btn');
+            animatedElements.forEach(el => {
+                el.style.animationPlayState = 'paused';
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spectrum 2025 - Cultural & Technical Fest</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="navbar.css"> <!-- ADD THIS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- PASTEL GLOW ANIMATION CSS -->
+    <style>
+    /* Pastel Glow Animation Styles */
+    .glow-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 3; /* Above background, below text */
+    }
+
+    .spectrum-glow {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 400px;
+        height: 200px;
+        opacity: 0;
+    }
+
+    .glow-wave {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background: radial-gradient(
+            ellipse at center,
+            rgba(234, 231, 255, 0.8) 0%,
+            rgba(216, 248, 242, 0.6) 25%,
+            rgba(246, 197, 217, 0.4) 50%,
+            rgba(199, 156, 207, 0.2) 75%,
+            transparent 100%
+        );
+        filter: blur(25px);
+        animation: waveGlow 2.5s ease-in-out forwards;
+    }
+
+    .glow-particle {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        animation: floatUp 2.5s ease-in-out forwards;
+    }
+
+    .particle-1 { background: #EAE7FF; top: 30%; left: 20%; animation-delay: 0.1s; }
+    .particle-2 { background: #D8F8F2; top: 40%; left: 50%; animation-delay: 0.3s; }
+    .particle-3 { background: #F6C5D9; top: 60%; left: 80%; animation-delay: 0.5s; }
+    .particle-4 { background: #C79CCF; top: 20%; left: 70%; animation-delay: 0.2s; }
+    .particle-5 { background: #EAE7FF; top: 70%; left: 30%; animation-delay: 0.4s; }
+
+    .glow-beam {
+        position: absolute;
+        width: 4px;
+        height: 0;
+        background: linear-gradient(to top, transparent, #EAE7FF, transparent);
+        animation: beamGrow 2s ease-in-out forwards;
+    }
+
+    .beam-1 { left: 10%; animation-delay: 0.2s; }
+    .beam-2 { left: 30%; animation-delay: 0.4s; }
+    .beam-3 { left: 50%; animation-delay: 0.6s; }
+    .beam-4 { left: 70%; animation-delay: 0.8s; }
+    .beam-5 { left: 90%; animation-delay: 1s; }
+
+    /* Animations */
+    @keyframes waveGlow {
+        0% {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.8);
+        }
+        20% {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        80% {
+            opacity: 0.8;
+            transform: translate(-50%, -50%) scale(1.2);
+        }
+        100% {
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(1.5);
+        }
+    }
+
+    @keyframes floatUp {
+        0% {
+            opacity: 0;
+            transform: translateY(0) scale(0);
+        }
+        30% {
+            opacity: 1;
+            transform: translateY(-10px) scale(1);
+        }
+        70% {
+            opacity: 0.8;
+            transform: translateY(-30px) scale(0.8);
+        }
+        100% {
+            opacity: 0;
+            transform: translateY(-50px) scale(0);
+        }
+    }
+
+    @keyframes beamGrow {
+        0% {
+            height: 0;
+            opacity: 0;
+        }
+        30% {
+            height: 80px;
+            opacity: 0.7;
+        }
+        70% {
+            height: 120px;
+            opacity: 0.4;
+        }
+        100% {
+            height: 150px;
+            opacity: 0;
+        }
+    }
+
+    /* Ensure hero section has proper positioning */
+    .hero {
+        position: relative;
+        overflow: hidden;
+    }
+    </style>
+    
+    <script>
+        if (!localStorage.getItem('isLoggedIn')) {
+            window.location.href = 'index.html';
+        }
+    </script>
+</head>
+<body>
+    <!-- Sparkle Background -->
+    <div class="sparkle-background"></div>
+    
+    <!-- Confetti Container -->
+    <div id="confetti-container"></div>
+    
+    <!-- NAVBAR HTML (KEEP THIS AS IS) -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="home.html" class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-palette"></i>
+                </div>
+                <span class="logo-text">Spectrum 2025</span>
+            </a>
+            
+            <button class="mobile-toggle" id="mobileToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item">
+                    <a href="home.html" class="nav-link home">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="events.html" class="nav-link events">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Events</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link login">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Login</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="about.html" class="nav-link about">
+                        <i class="fas fa-info-circle"></i>
+                        <span>About</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="contact.html" class="nav-link contact">
+                        <i class="fas fa-envelope"></i>
+                        <span>Contact</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="dashboard.html" class="nav-link dashboard">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-background"></div>
+        
+        <!-- PASTEL GLOW ANIMATION - ADDED HERE -->
+        <div class="glow-container" id="spectrumGlow">
+            <div class="spectrum-glow">
+                <div class="glow-wave"></div>
+                <div class="glow-particle particle-1"></div>
+                <div class="glow-particle particle-2"></div>
+                <div class="glow-particle particle-3"></div>
+                <div class="glow-particle particle-4"></div>
+                <div class="glow-particle particle-5"></div>
+                <div class="glow-beam beam-1"></div>
+                <div class="glow-beam beam-2"></div>
+                <div class="glow-beam beam-3"></div>
+                <div class="glow-beam beam-4"></div>
+                <div class="glow-beam beam-5"></div>
+            </div>
+        </div>
+        
+        <div class="hero-content">
+            <h1 class="hero-title">SPECTRUM 2025</h1>
+            <p class="hero-tagline">Where Culture Radiates and Technology Illuminates.</p>
+            <button class="cta-button">
+                Join the Celebration ✨
+                <div class="button-glow"></div>
+            </button>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="features-grid">
+                <!-- Card 1 -->
+                <div class="feature-card">
+                    <div class="card-icon">🎭</div>
+                    <h3 class="card-title">Cultural Fiesta</h3>
+                    <p class="card-description">Experience the vibrant tapestry of dance, music, art, and cultural performances that celebrate diversity and creativity.</p>
+                    <div class="card-glow"></div>
+                </div>
+                
+                <!-- Card 2 -->
+                <div class="feature-card">
+                    <div class="card-icon">⚡</div>
+                    <h3 class="card-title">Tech Spark Arena</h3>
+                    <p class="card-description">Dive into cutting-edge technology, hackathons, robotics, and innovation challenges that push boundaries.</p>
+                    <div class="card-glow"></div>
+                </div>
+                
+                <!-- Card 3 -->
+                <div class="feature-card">
+                    <div class="card-icon">🎈</div>
+                    <h3 class="card-title">Fun Carnival</h3>
+                    <p class="card-description">Enjoy games, food stalls, entertainment, and spontaneous fun that brings everyone together in celebration.</p>
+                    <div class="card-glow"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p class="footer-quote">"Create. Celebrate. Connect — at Spectrum 2025."</p>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                    <a href="#" class="footer-link">Terms of Service</a>
+                    <a href="#" class="footer-link">Contact Us</a>
+                </div>
+                <p class="footer-copyright">&copy; 2024 Spectrum 2025. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="navbar.js"></script> <!-- ADD THIS -->
+    <script src="script.js"></script>
+    
+    <!-- PASTEL GLOW ANIMATION JAVASCRIPT -->
+    <script>
+    // Pastel Glow Animation Trigger
+    document.addEventListener('DOMContentLoaded', function() {
+        const glowContainer = document.getElementById('spectrumGlow');
+        
+        // Remove animation after it completes
+        setTimeout(() => {
+            if (glowContainer) {
+                glowContainer.style.display = 'none';
+            }
+        }, 3000); // Matches animation duration
+        
+        // Optional: Re-show animation when page becomes visible again
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden && glowContainer) {
+                glowContainer.style.display = 'block';
+                setTimeout(() => {
+                    glowContainer.style.display = 'none';
+                }, 3000);
+            }
+        });
+    });
+    </script>
+</body>
+</html>

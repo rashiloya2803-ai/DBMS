@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Spectrum 2025 🌈</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        if (!localStorage.getItem('isLoggedIn')) {
+            window.location.href = 'index.html';
+        }
+    </script>
+    <!-- CHANGE 1: ADD NAVBAR CSS LINK -->
+    <link rel="stylesheet" href="navbar.css">
+    
+    <style>
+        /* YOUR EXISTING CONTACT PAGE CSS */
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500&family=Poppins:wght@300;400;500&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f8f7ff 0%, #f0f7ff 50%, #f7f2ff 100%);
+            color: #6b6b8a;
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding-top: 80px; /* ADD THIS FOR NAVBAR SPACE */
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            text-align: center;
+            padding: 2rem 0;
+            animation: fadeUp 1.5s ease-out;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 300;
+            background: linear-gradient(135deg, #ff9ebb 0%, #a3d9ff 25%, #b5e8b5 50%, #ffd6a5 75%, #d9b3ff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+            letter-spacing: 2px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: #9a9ab8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3rem;
+            margin: 3rem 0;
+        }
+        
+        .contact-form {
+            flex: 1;
+            min-width: 300px;
+            padding: 2.5rem;
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(200, 200, 255, 0.2);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            animation: fadeUp 1.8s ease-out;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #8a7fca;
+            font-weight: 500;
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.7);
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            color: #6b6b8a;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(200, 200, 255, 0.1);
+        }
+        
+        input:focus, textarea:focus {
+            outline: none;
+            box-shadow: 0 5px 20px rgba(163, 217, 255, 0.3);
+            background: rgba(255, 255, 255, 0.9);
+        }
+        
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #ff9ebb 0%, #a3d9ff 50%, #d9b3ff 100%);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(163, 217, 255, 0.3);
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(163, 217, 255, 0.5);
+        }
+        
+        .contact-info {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            animation: fadeUp 2s ease-out;
+        }
+        
+        .contact-card {
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(200, 200, 255, 0.2);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(200, 200, 255, 0.3);
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        
+        .email .contact-icon {
+            background: linear-gradient(135deg, #ffb6c1, #ff9ebb);
+            box-shadow: 0 0 15px rgba(255, 182, 193, 0.5);
+        }
+        
+        .phone .contact-icon {
+            background: linear-gradient(135deg, #a3d9ff, #7bc8ff);
+            box-shadow: 0 0 15px rgba(163, 217, 255, 0.5);
+        }
+        
+        .instagram .contact-icon {
+            background: linear-gradient(135deg, #ffd6a5, #ffc785);
+            box-shadow: 0 0 15px rgba(255, 214, 165, 0.5);
+        }
+        
+        .address .contact-icon {
+            background: linear-gradient(135deg, #b5e8b5, #8cd98c);
+            box-shadow: 0 0 15px rgba(181, 232, 181, 0.5);
+        }
+        
+        .contact-text h3 {
+            color: #8a7fca;
+            margin-bottom: 0.3rem;
+            font-weight: 500;
+        }
+        
+        .contact-text p {
+            color: #6b6b8a;
+            margin: 0;
+        }
+        
+        .map-pin-container {
+            position: relative;
+            height: 200px;
+            margin: 2rem 0;
+            border-radius: 20px;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(255, 182, 193, 0.2) 0%, rgba(209, 231, 255, 0.2) 50%, rgba(231, 209, 255, 0.2) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        
+        .map-pin {
+            position: relative;
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        .pin {
+            width: 30px;
+            height: 40px;
+            background: linear-gradient(135deg, #ff9ebb, #a3d9ff);
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+            box-shadow: 0 0 20px rgba(163, 217, 255, 0.7);
+            position: relative;
+        }
+        
+        .pin:after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 5px;
+            left: 5px;
+        }
+        
+        .pin-shadow {
+            width: 30px;
+            height: 10px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            margin: 10px auto 0;
+            animation: shadow 4s ease-in-out infinite;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 3rem 0 1rem;
+            animation: fadeUp 2.2s ease-out;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .social-icon {
+            font-size: 1.8rem;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .social-icon:nth-child(1) {
+            background: linear-gradient(135deg, #ffb6c1, #ff9ebb);
+            color: white;
+            box-shadow: 0 0 15px rgba(255, 182, 193, 0.7);
+        }
+        
+        .social-icon:nth-child(2) {
+            background: linear-gradient(135deg, #a3d9ff, #7bc8ff);
+            color: white;
+            box-shadow: 0 0 15px rgba(163, 217, 255, 0.7);
+        }
+        
+        .social-icon:nth-child(3) {
+            background: linear-gradient(135deg, #b5e8b5, #8cd98c);
+            color: white;
+            box-shadow: 0 0 15px rgba(181, 232, 181, 0.7);
+        }
+        
+        .social-icon:nth-child(4) {
+            background: linear-gradient(135deg, #ffd6a5, #ffc785);
+            color: white;
+            box-shadow: 0 0 15px rgba(255, 214, 165, 0.7);
+        }
+        
+        .social-icon:nth-child(5) {
+            background: linear-gradient(135deg, #d9b3ff, #c285ff);
+            color: white;
+            box-shadow: 0 0 15px rgba(217, 179, 255, 0.7);
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            animation: glow 1.5s ease-in-out infinite alternate;
+        }
+        
+        .copyright {
+            color: #9a9ab8;
+            font-size: 0.9rem;
+            margin-top: 2rem;
+        }
+        
+        /* Floating elements */
+        .floating-element {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(20px);
+            z-index: -1;
+            animation: float 15s infinite ease-in-out;
+            opacity: 0.7;
+        }
+        
+        .floating-element:nth-child(1) {
+            top: 10%;
+            left: 5%;
+            width: 120px;
+            height: 120px;
+            background: #ffb6c1;
+            animation-delay: 0s;
+        }
+        
+        .floating-element:nth-child(2) {
+            top: 60%;
+            right: 10%;
+            width: 80px;
+            height: 80px;
+            background: #a3d9ff;
+            animation-delay: 5s;
+        }
+        
+        .floating-element:nth-child(3) {
+            bottom: 20%;
+            left: 15%;
+            width: 150px;
+            height: 150px;
+            background: #b5e8b5;
+            animation-delay: 10s;
+        }
+        
+        /* Animations */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(10deg);
+            }
+        }
+        
+        @keyframes shadow {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+            50% {
+                transform: scale(0.8);
+                opacity: 0.4;
+            }
+        }
+        
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+            }
+            to {
+                box-shadow: 0 0 25px rgba(255, 255, 255, 0.9);
+            }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .content {
+                flex-direction: column;
+            }
+            
+            .social-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- CHANGE 2: REPLACE THE ENTIRE NAVBAR SECTION -->
+    <!-- NAVBAR HTML -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="home.html" class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-palette"></i>
+                </div>
+                <span class="logo-text">Spectrum 2025</span>
+            </a>
+            
+            <button class="mobile-toggle" id="mobileToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item">
+                    <a href="home.html" class="nav-link home">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="events.html" class="nav-link events">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Events</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link login">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Login</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="about.html" class="nav-link about">
+                        <i class="fas fa-info-circle"></i>
+                        <span>About</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="contact.html" class="nav-link contact">
+                        <i class="fas fa-envelope"></i>
+                        <span>Contact</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="dashboard.html" class="nav-link dashboard">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- YOUR EXISTING CONTACT PAGE CONTENT -->
+    <!-- Floating background elements -->
+    <div class="floating-element"></div>
+    <div class="floating-element"></div>
+    <div class="floating-element"></div>
+    
+    <div class="container">
+        <header>
+            <h1>Contact Spectrum 2025 🌈</h1>
+            <p class="subtitle">Get in touch with us - we'd love to hear from you!</p>
+        </header>
+        
+        <div class="content">
+            <div class="contact-form">
+                <h2>Send us a Message</h2>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Your Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Your Message</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+            
+            <div class="contact-info">
+                <div class="contact-card email">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h3>Email</h3>
+                        <p>hello@spectrum2025.com</p>
+                    </div>
+                </div>
+                
+                <div class="contact-card phone">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h3>Phone</h3>
+                        <p>+1 (555) 123-4567</p>
+                    </div>
+                </div>
+                
+                <div class="contact-card instagram">
+                    <div class="contact-icon">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h3>Instagram</h3>
+                        <p>@spectrum2025</p>
+                    </div>
+                </div>
+                
+                <div class="contact-card address">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h3>College Address</h3>
+                        <p>University Arts Campus<br>123 Creativity Lane<br>Imagination City, IC 54321</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="map-pin-container">
+            <div class="map-pin">
+                <div class="pin"></div>
+                <div class="pin-shadow"></div>
+            </div>
+        </div>
+        
+        <footer>
+            <div class="social-icons">
+                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-tiktok"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p class="copyright">© 2025 Spectrum Festival. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- CHANGE 3: ADD NAVBAR JS BEFORE YOUR PAGE-SPECIFIC JAVASCRIPT -->
+    <script src="navbar.js"></script>
+    
+    <!-- YOUR EXISTING CONTACT PAGE JAVASCRIPT -->
+    <script>
+        // Form submission handling
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            // In a real application, you would send this data to a server
+            // For this example, we'll just show an alert
+            alert(`Thank you, ${name}! Your message has been sent. We'll get back to you at ${email} soon.`);
+            
+            // Reset the form
+            document.getElementById('contactForm').reset();
+        });
+        
+        // Add subtle scroll animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationPlayState = 'running';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe elements with animations
+            const animatedElements = document.querySelectorAll('.contact-form, .contact-info, .map-pin-container, footer');
+            animatedElements.forEach(el => {
+                el.style.animationPlayState = 'paused';
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
